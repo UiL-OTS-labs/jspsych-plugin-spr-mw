@@ -1,0 +1,7 @@
+
+# vim temp files
+*.sw?
+
+dist/
+node_modules/
+
