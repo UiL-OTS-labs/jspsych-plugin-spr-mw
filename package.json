@@ -1,11 +1,11 @@
 {
   "name": "jspsych-spr-mw",
   "version": "1.0.0",
-  "description": "## A self paced reading with moving window experiment using jsPsych",
+  "description": "## A jsPsych plugin for self paced reading with moving window.",
   "main": "main.js",
   "scripts": {
-    "test": "./build.bash && node ./dist/test.js",
-    "build": "./build.bash"
+    "test": "./build.sh && node ./dist/test.js",
+    "build": "./build.sh"
   },
   "keywords": [],
   "author": "",
