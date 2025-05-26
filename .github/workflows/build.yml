@@ -24,7 +24,7 @@ jobs:
           cache: npm
       - name: setup clean install of node packages
         run: npm ci
-      - name:
+      - name: Build a distributable package
         run: npm run build
-      - name: Create distribution package
-        run: npm run dist
+      - name: run test
+        run: npm run test
