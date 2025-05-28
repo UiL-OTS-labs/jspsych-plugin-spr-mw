@@ -1,0 +1,30 @@
+---
+name: SPR moving window jspsych plugin build and package
+run-name: ${{ github.actor }} is building plugin-spr-mw
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version }}
+          cache: npm
+      - name: setup clean install of node packages
+        run: npm ci
+      - name: Build a distributable package
+        run: npm run build
+      - name: run test
+        run: npm run test

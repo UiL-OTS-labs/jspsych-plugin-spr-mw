@@ -11,3 +11,13 @@ await esbuild.build({
     format: "esm"
 })
 
+await esbuild.build({
+    entryPoints: [
+        './test/test.js'
+    ],
+    bundle:true,
+    outdir: 'dist-test',
+    minify: false,
+    sourcemap: true,
+    format: "esm"
+})
