@@ -32,7 +32,7 @@ jobs:
           mkdir spr-moving-window
           cp dist/* spr-moving-window
           cp LICENSE spr-moving-window
-          zip spr-moving-window-dist.zip spr-moving-window/* LICENSE
+          zip spr-moving-window-dist.zip spr-moving-window/*
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
