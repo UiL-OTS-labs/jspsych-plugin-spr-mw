@@ -27,11 +27,15 @@ jobs:
         run: npm run build
       - name: run test
         run: npm run test
+      - name: package dist/* and LICENSE
+        run: |
+          mkdir spr-moving-window
+          cp dist/* spr-moving-window
+          cp LICENSE spr-moving-window
+          zip spr-moving-window-dist.zip spr-moving-window/* LICENSE
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
           files: |
-            LICENSE
-            dist/jspsych-spr-moving-window.js
-            dist/jspsych-spr-moving-window.js.map
+            spr-moving-window-dist.zip
