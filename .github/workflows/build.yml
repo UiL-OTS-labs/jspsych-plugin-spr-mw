@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,3 +29,22 @@ jobs:
         run: npm run build
       - name: run test
         run: npm run test
+      - name: create-distributable-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-artifact
+          path: dist
+          if-no-files-found: error
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-artifact
+      - name: ls
+        run: ls
+
+
