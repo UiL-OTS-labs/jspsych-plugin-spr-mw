@@ -43,10 +43,6 @@ jobs:
           if-no-files-found: error
   deploy:
     name: deploy
-    on:
-      push:
-        tags:
-          - 'v*.*.*'
     needs: build
     runs-on: self-hosted
     env:
@@ -61,6 +57,7 @@ jobs:
       - name: extract archive
         run: tar -xvf ${tarbal}
       - name: create htdocs folder and copy file to it
+        if: ${{github.ref_type == 'tag'}}
         env:
           target_folder: "${htdocs_folder}${plugins}{spr_folder}"
         run: |
