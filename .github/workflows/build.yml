@@ -38,8 +38,8 @@ jobs:
       - name: create-distributable-artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.artifact_name}}
-          path: ${{env.tarbal}}
+          name: ${{ env.artifact_name }}
+          path: ${{ env.tarbal }}
           if-no-files-found: error
   deploy:
     name: deploy
@@ -53,7 +53,7 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{env.artifact_name}}
+          name: ${{ env.artifact_name }}
       - name: extract archive
         run: tar -xvf ${tarbal}
       - name: create htdocs folder and copy file to it
