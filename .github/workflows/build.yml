@@ -61,7 +61,7 @@ jobs:
       - name: create htdocs folder and copy file to it
         if: ${{github.ref_type == 'tag'}}
         env:
-          target_folder: ${{env.htdocs_folder}}${{env.plugins}}{{env.spr_folder}
+          target_folder: ${{env.htdocs_folder}}${{env.plugins}}{{env.spr_folder}}
         run: |
           echo "target_folder = ${target_folder}"
           # obtain ref which should be a tag
@@ -70,8 +70,8 @@ jobs:
           echo $tag
           tag=${tag##*/}
           echo $tag
-          #mkdir -p "${target_folder}/${tag}"
-          #cp ./dist/* "$target_folder}/${tag}"
+          mkdir -p "${target_folder}/${tag}"
+          cp ./dist/* "${target_folder}/${tag}"
       - name: cleanup
         run: |
           rm -rf ./dist
