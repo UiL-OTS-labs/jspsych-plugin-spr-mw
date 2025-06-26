@@ -61,7 +61,7 @@ jobs:
       - name: create htdocs folder and copy file to it
         if: ${{github.ref_type == 'tag'}}
         env:
-          target_folder: ${{htdocs_folder}}${{plugins}}{{spr_folder}
+          target_folder: ${{env.htdocs_folder}}${{env.plugins}}{{env.spr_folder}
         run: |
           echo "target_folder = ${target_folder}"
           # obtain ref which should be a tag
