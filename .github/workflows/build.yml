@@ -7,8 +7,13 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  tarbal: dist.tar.gz
+  artifact_name: dist-artifact
+
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,3 +33,44 @@ jobs:
         run: npm run build
       - name: run test
         run: npm run test
+      - name: create archive
+        run: tar -cvzf ${tarbal} dist
+      - name: create-distributable-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.artifact_name }}
+          path: ${{ env.tarbal }}
+          if-no-files-found: error
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: self-hosted
+    env:
+      htdocs_folder: /hum/web/gw-r-ils-web-experiments.im.hum.uu.nl/htdocs/
+      plugins: jspsych/plugins/
+      spr_folder: spr-mw
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.artifact_name }}
+      - name: extract archive
+        run: tar -xvf ${tarbal}
+      - name: create htdocs folder and copy file to it
+        if: ${{github.ref_type == 'tag'}}
+        env:
+          target_folder: "${htdocs_folder}${plugins}{spr_folder}"
+        run: |
+          echo "target_folder = ${target_folder}"
+          # obtain ref which should be a tag
+          tag=${{github.ref}}
+          # strip /refs/tags/ from /refs/tags/v0.1.2/
+          echo $tag
+          tag=${tag##*/}
+          echo $tag
+          mkdir -p "${target_folder}/${tag}"
+          cp ./dist/* "$target_folder}/${tag}"
+      - name: cleanup
+        run: |
+          rm -rf ./dist
+          rm -f ./dist.tar
