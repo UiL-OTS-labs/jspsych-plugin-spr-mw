@@ -63,12 +63,15 @@ jobs:
         env:
           target_folder: ${{env.htdocs_folder}}${{env.plugins}}${{env.spr_folder}}
         run: |
-          echo "target_folder = ${target_folder}"
           # obtain ref which should be a tag
           tag=${{github.ref}}
-          # strip /refs/tags/ from /refs/tags/v0.1.2/
+          # strip /refs/tags/ from /refs/tags/v0.1.2
           echo $tag
           tag=${tag##*/}
+          #strip v from tag
+          tag=${tag:1}
+          # keep major and minor version, strip micro
+          tag=${tag##*.}
           echo $tag
           mkdir -p "${target_folder}/${tag}"
           cp ./dist/* "${target_folder}/${tag}"
