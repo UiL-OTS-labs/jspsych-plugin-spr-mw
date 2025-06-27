@@ -71,7 +71,7 @@ jobs:
           #strip v from tag
           tag=${tag:1}
           # keep major and minor version, strip micro
-          tag=${tag##*.}
+          tag=${tag%.*}
           echo $tag
           mkdir -p "${target_folder}/${tag}"
           cp ./dist/* "${target_folder}/${tag}"
